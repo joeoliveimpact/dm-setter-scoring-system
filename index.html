@@ -1,12 +1,11 @@
-{
-  `path`: `index.html`,
-  `content`: `<!DOCTYPE html>
-<html lang=\"en\">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DM Setter Scoring System</title>
     <style>
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,10 +13,11 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
         }
@@ -44,6 +44,11 @@
             font-weight: 700;
         }
         
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
         .content {
             padding: 30px;
         }
@@ -53,16 +58,101 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 15px;
         }
         
         .candidate-info input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
             font-size: 0.9rem;
+        }
+        
+        .candidate-info input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        
+        .score-display {
+            background: #2d3436;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .total-score {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .total-score div:first-child {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin: 10px 0;
+        }
+        
+        .total-score div:last-child {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .score-breakdown {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .score-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .score-item div:first-child {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .recommendation {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .recommendation.excellent {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .recommendation.good {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        
+        .recommendation.poor {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
         }
         
         .scoring-section {
@@ -73,21 +163,17 @@
             font-size: 1.4rem;
             color: #2d3436;
             margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ff6b6b;
             font-weight: 600;
-        }
-        
-        .criteria-grid {
-            display: grid;
-            gap: 20px;
         }
         
         .criterion {
             background: #fafbfc;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #ff6b6b;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #ff6b6b;
+            margin-bottom: 25px;
         }
         
         .criterion.critical {
@@ -107,7 +193,7 @@
         
         .criterion-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
             flex-wrap: wrap;
@@ -117,13 +203,13 @@
         .criterion-title {
             font-weight: 600;
             color: #2d3436;
-            flex: 1;
+            font-size: 1.1rem;
         }
         
         .weight-badge {
             background: #74b9ff;
             color: white;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -141,17 +227,22 @@
             background: #27ae60;
         }
         
+        .criterion p {
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
         .scoring-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         
         .score-option {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
             background: white;
             border: 2px solid #e1e5e9;
             border-radius: 8px;
@@ -161,73 +252,23 @@
         
         .score-option:hover {
             border-color: #ff6b6b;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
         }
         
         .score-option.selected {
             border-color: #ff6b6b;
             background: #fff5f5;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
         
-        .score-option input[type=\"radio\"] {
-            margin-right: 10px;
+        .score-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
         }
         
-        .score-display {
-            position: sticky;
-            top: 20px;
-            background: #2d3436;
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .total-score {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .score-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ff6b6b;
-        }
-        
-        .score-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            text-align: center;
-        }
-        
-        .score-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-        }
-        
-        .recommendation {
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        .recommendation.excellent {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .recommendation.good {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .recommendation.poor {
-            background: #f8d7da;
-            color: #721c24;
+        .score-option span {
+            font-size: 0.95rem;
         }
         
         .notes-section {
@@ -242,24 +283,35 @@
             border-radius: 8px;
             resize: vertical;
             font-family: inherit;
+            font-size: 0.95rem;
+        }
+        
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
         
         .export-btn {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
-            padding: 12px 30px;
+            padding: 15px 30px;
             border: none;
             border-radius: 25px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 20px;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
         
         .export-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
         }
         
+        /* Responsive design */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -269,388 +321,399 @@
                 padding: 20px;
             }
             
-            .scoring-options {
-                grid-template-columns: 1fr;
+            .candidate-info {
+                flex-direction: column;
+            }
+            
+            .candidate-info input {
+                min-width: auto;
+            }
+            
+            .score-breakdown {
+                flex-direction: column;
+            }
+            
+            .criterion-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .score-number {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class=\"container\">
-        <div class=\"header\">
+    <div class="container">
+        <div class="header">
             <h1>🎯 DM Setter Application Scoring System</h1>
             <p>Comprehensive evaluation tool for candidate assessment</p>
         </div>
         
-        <div class=\"content\">
+        <div class="content">
             <!-- Candidate Information -->
-            <div class=\"candidate-info\">
-                <input type=\"text\" id=\"candidateName\" placeholder=\"Candidate Name\">
-                <input type=\"text\" id=\"applicationDate\" placeholder=\"Application Date\">
-                <input type=\"text\" id=\"reviewerName\" placeholder=\"Reviewer Name\">
+            <div class="candidate-info">
+                <input type="text" id="candidateName" placeholder="Candidate Name">
+                <input type="text" id="applicationDate" placeholder="Application Date">
+                <input type="text" id="reviewerName" placeholder="Reviewer Name">
             </div>
             
             <!-- Score Display -->
-            <div class=\"score-display\">
-                <div class=\"total-score\">
+            <div class="score-display">
+                <div class="total-score">
                     <div>Total Score</div>
-                    <div class=\"score-number\" id=\"totalScore\">0</div>
+                    <div class="score-number" id="totalScore">0</div>
                     <div>out of 100 points</div>
                 </div>
                 
-                <div class=\"score-breakdown\">
-                    <div class=\"score-item\">
+                <div class="score-breakdown">
+                    <div class="score-item">
                         <div>Critical</div>
-                        <div><span id=\"criticalScore\">0</span>/60</div>
+                        <div><span id="criticalScore">0</span>/60</div>
                     </div>
-                    <div class=\"score-item\">
+                    <div class="score-item">
                         <div>Important</div>
-                        <div><span id=\"importantScore\">0</span>/25</div>
+                        <div><span id="importantScore">0</span>/25</div>
                     </div>
-                    <div class=\"score-item\">
+                    <div class="score-item">
                         <div>Bonus</div>
-                        <div><span id=\"bonusScore\">0</span>/15</div>
+                        <div><span id="bonusScore">0</span>/15</div>
                     </div>
                 </div>
                 
-                <div id=\"recommendation\" class=\"recommendation\"></div>
+                <div id="recommendation" class="recommendation"></div>
             </div>
             
             <!-- Critical Requirements (60 points total) -->
-            <div class=\"scoring-section\">
-                <h2 class=\"section-title\">🚨 Critical Requirements (60 points)</h2>
+            <div class="scoring-section">
+                <h2 class="section-title">🚨 Critical Requirements (60 points)</h2>
                 
-                <div class=\"criteria-grid\">
-                    <!-- EST Availability -->
-                    <div class=\"criterion critical\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">9-5 EST Availability (Monday-Friday)</div>
-                            <div class=\"weight-badge\">15 pts</div>
-                        </div>
-                        <p>US timezone required for core business hours</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"availability\" value=\"15\" onchange=\"updateScore()\">
-                                <span><strong>15pts:</strong> Full 9-5 EST availability</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"availability\" value=\"8\" onchange=\"updateScore()\">
-                                <span><strong>8pts:</strong> Mostly available with some flexibility</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"availability\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Cannot work EST hours</span>
-                            </label>
-                        </div>
+                <!-- EST Availability -->
+                <div class="criterion critical">
+                    <div class="criterion-header">
+                        <div class="criterion-title">9-5 EST Availability (Monday-Friday)</div>
+                        <div class="weight-badge">15 pts</div>
                     </div>
-                    
-                    <!-- DM Setting Experience -->
-                    <div class=\"criterion critical\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">DM Setting Track Record</div>
-                            <div class=\"weight-badge\">15 pts</div>
-                        </div>
-                        <p>Proven results with verifiable metrics</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"dmExperience\" value=\"15\" onchange=\"updateScore()\">
-                                <span><strong>15pts:</strong> Extensive experience with excellent metrics</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"dmExperience\" value=\"10\" onchange=\"updateScore()\">
-                                <span><strong>10pts:</strong> Good experience with solid results</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"dmExperience\" value=\"5\" onchange=\"updateScore()\">
-                                <span><strong>5pts:</strong> Some experience, limited results</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"dmExperience\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> No DM setting experience</span>
-                            </label>
-                        </div>
+                    <p>US timezone required for core business hours</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="availability" value="15" onchange="updateScore()">
+                            <span><strong>15pts:</strong> Full 9-5 EST availability</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="availability" value="8" onchange="updateScore()">
+                            <span><strong>8pts:</strong> Mostly available with some flexibility</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="availability" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Cannot work EST hours</span>
+                        </label>
                     </div>
-                    
-                    <!-- CRM Proficiency -->
-                    <div class=\"criterion critical\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">CRM Systems Proficiency</div>
-                            <div class=\"weight-badge\">10 pts</div>
-                        </div>
-                        <p>Technical skills and adaptability</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"crmSkills\" value=\"10\" onchange=\"updateScore()\">
-                                <span><strong>10pts:</strong> Expert with multiple CRM systems</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"crmSkills\" value=\"7\" onchange=\"updateScore()\">
-                                <span><strong>7pts:</strong> Proficient with several systems</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"crmSkills\" value=\"4\" onchange=\"updateScore()\">
-                                <span><strong>4pts:</strong> Basic CRM experience</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"crmSkills\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> No CRM experience</span>
-                            </label>
-                        </div>
+                </div>
+                
+                <!-- DM Setting Experience -->
+                <div class="criterion critical">
+                    <div class="criterion-header">
+                        <div class="criterion-title">DM Setting Track Record</div>
+                        <div class="weight-badge">15 pts</div>
                     </div>
-                    
-                    <!-- AI Tools Knowledge -->
-                    <div class=\"criterion critical\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">AI Tools for Workflow Optimization</div>
-                            <div class=\"weight-badge\">10 pts</div>
-                        </div>
-                        <p>Modern tools to maximize efficiency</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"aiTools\" value=\"10\" onchange=\"updateScore()\">
-                                <span><strong>10pts:</strong> Advanced AI tool user</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"aiTools\" value=\"6\" onchange=\"updateScore()\">
-                                <span><strong>6pts:</strong> Some AI tool experience</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"aiTools\" value=\"2\" onchange=\"updateScore()\">
-                                <span><strong>2pts:</strong> Basic AI awareness</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"aiTools\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> No AI tool experience</span>
-                            </label>
-                        </div>
+                    <p>Proven results with verifiable metrics</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="dmExperience" value="15" onchange="updateScore()">
+                            <span><strong>15pts:</strong> Extensive experience with excellent metrics</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="dmExperience" value="10" onchange="updateScore()">
+                            <span><strong>10pts:</strong> Good experience with solid results</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="dmExperience" value="5" onchange="updateScore()">
+                            <span><strong>5pts:</strong> Some experience, limited results</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="dmExperience" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> No DM setting experience</span>
+                        </label>
                     </div>
-                    
-                    <!-- Training/Certification -->
-                    <div class=\"criterion critical\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Appointment Setting Training/Certification</div>
-                            <div class=\"weight-badge\">10 pts</div>
-                        </div>
-                        <p>Formal training or verifiable expertise</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"training\" value=\"10\" onchange=\"updateScore()\">
-                                <span><strong>10pts:</strong> Multiple certifications/extensive training</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"training\" value=\"6\" onchange=\"updateScore()\">
-                                <span><strong>6pts:</strong> Some formal training</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"training\" value=\"3\" onchange=\"updateScore()\">
-                                <span><strong>3pts:</strong> Self-taught with some proof</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"training\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> No formal training</span>
-                            </label>
-                        </div>
+                </div>
+                
+                <!-- CRM Proficiency -->
+                <div class="criterion critical">
+                    <div class="criterion-header">
+                        <div class="criterion-title">CRM Systems Proficiency</div>
+                        <div class="weight-badge">10 pts</div>
+                    </div>
+                    <p>Technical skills and adaptability</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="crmSkills" value="10" onchange="updateScore()">
+                            <span><strong>10pts:</strong> Expert with multiple CRM systems</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="crmSkills" value="7" onchange="updateScore()">
+                            <span><strong>7pts:</strong> Proficient with several systems</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="crmSkills" value="4" onchange="updateScore()">
+                            <span><strong>4pts:</strong> Basic CRM experience</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="crmSkills" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> No CRM experience</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- AI Tools Knowledge -->
+                <div class="criterion critical">
+                    <div class="criterion-header">
+                        <div class="criterion-title">AI Tools for Workflow Optimization</div>
+                        <div class="weight-badge">10 pts</div>
+                    </div>
+                    <p>Modern tools to maximize efficiency</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="aiTools" value="10" onchange="updateScore()">
+                            <span><strong>10pts:</strong> Advanced AI tool user</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="aiTools" value="6" onchange="updateScore()">
+                            <span><strong>6pts:</strong> Some AI tool experience</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="aiTools" value="2" onchange="updateScore()">
+                            <span><strong>2pts:</strong> Basic AI awareness</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="aiTools" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> No AI tool experience</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Training/Certification -->
+                <div class="criterion critical">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Appointment Setting Training/Certification</div>
+                        <div class="weight-badge">10 pts</div>
+                    </div>
+                    <p>Formal training or verifiable expertise</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="training" value="10" onchange="updateScore()">
+                            <span><strong>10pts:</strong> Multiple certifications/extensive training</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="training" value="6" onchange="updateScore()">
+                            <span><strong>6pts:</strong> Some formal training</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="training" value="3" onchange="updateScore()">
+                            <span><strong>3pts:</strong> Self-taught with some proof</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="training" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> No formal training</span>
+                        </label>
                     </div>
                 </div>
             </div>
             
             <!-- Important Qualities (25 points total) -->
-            <div class=\"scoring-section\">
-                <h2 class=\"section-title\">💡 Important Qualities (25 points)</h2>
+            <div class="scoring-section">
+                <h2 class="section-title">💡 Important Qualities (25 points)</h2>
                 
-                <div class=\"criteria-grid\">
-                    <!-- Growth Mindset -->
-                    <div class=\"criterion important\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Growth Mindset & Learning Eagerness</div>
-                            <div class=\"weight-badge\">8 pts</div>
-                        </div>
-                        <p>Hunger to prosper and continuous improvement</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"growthMindset\" value=\"8\" onchange=\"updateScore()\">
-                                <span><strong>8pts:</strong> Exceptional growth mindset</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"growthMindset\" value=\"5\" onchange=\"updateScore()\">
-                                <span><strong>5pts:</strong> Good attitude toward growth</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"growthMindset\" value=\"2\" onchange=\"updateScore()\">
-                                <span><strong>2pts:</strong> Some growth orientation</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"growthMindset\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Fixed mindset</span>
-                            </label>
-                        </div>
+                <!-- Growth Mindset -->
+                <div class="criterion important">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Growth Mindset & Learning Eagerness</div>
+                        <div class="weight-badge">8 pts</div>
                     </div>
-                    
-                    <!-- Accountability & Communication -->
-                    <div class=\"criterion important\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Accountability & Communication</div>
-                            <div class=\"weight-badge\">7 pts</div>
-                        </div>
-                        <p>Integrity, transparency, and reliability</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"accountability\" value=\"7\" onchange=\"updateScore()\">
-                                <span><strong>7pts:</strong> Excellent accountability</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"accountability\" value=\"4\" onchange=\"updateScore()\">
-                                <span><strong>4pts:</strong> Good communication skills</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"accountability\" value=\"2\" onchange=\"updateScore()\">
-                                <span><strong>2pts:</strong> Adequate communication</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"accountability\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Poor communication/accountability</span>
-                            </label>
-                        </div>
+                    <p>Hunger to prosper and continuous improvement</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="growthMindset" value="8" onchange="updateScore()">
+                            <span><strong>8pts:</strong> Exceptional growth mindset</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="growthMindset" value="5" onchange="updateScore()">
+                            <span><strong>5pts:</strong> Good attitude toward growth</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="growthMindset" value="2" onchange="updateScore()">
+                            <span><strong>2pts:</strong> Some growth orientation</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="growthMindset" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Fixed mindset</span>
+                        </label>
                     </div>
-                    
-                    <!-- Feedback Reception -->
-                    <div class=\"criterion important\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Feedback Reception & Adaptability</div>
-                            <div class=\"weight-badge\">5 pts</div>
-                        </div>
-                        <p>Takes direction well and implements improvements</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"feedback\" value=\"5\" onchange=\"updateScore()\">
-                                <span><strong>5pts:</strong> Excellent with feedback</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"feedback\" value=\"3\" onchange=\"updateScore()\">
-                                <span><strong>3pts:</strong> Good at receiving feedback</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"feedback\" value=\"1\" onchange=\"updateScore()\">
-                                <span><strong>1pt:</strong> Somewhat receptive</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"feedback\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Resistant to feedback</span>
-                            </label>
-                        </div>
+                </div>
+                
+                <!-- Accountability & Communication -->
+                <div class="criterion important">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Accountability & Communication</div>
+                        <div class="weight-badge">7 pts</div>
                     </div>
-                    
-                    <!-- Commitment Level -->
-                    <div class=\"criterion important\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Full-Time Commitment</div>
-                            <div class=\"weight-badge\">5 pts</div>
-                        </div>
-                        <p>Dedicated focus, not juggling multiple roles</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"commitment\" value=\"5\" onchange=\"updateScore()\">
-                                <span><strong>5pts:</strong> Fully committed to this role</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"commitment\" value=\"2\" onchange=\"updateScore()\">
-                                <span><strong>2pts:</strong> Mostly committed</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"commitment\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Multiple roles/testing waters</span>
-                            </label>
-                        </div>
+                    <p>Integrity, transparency, and reliability</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="accountability" value="7" onchange="updateScore()">
+                            <span><strong>7pts:</strong> Excellent accountability</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="accountability" value="4" onchange="updateScore()">
+                            <span><strong>4pts:</strong> Good communication skills</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="accountability" value="2" onchange="updateScore()">
+                            <span><strong>2pts:</strong> Adequate communication</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="accountability" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Poor communication/accountability</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Feedback Reception -->
+                <div class="criterion important">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Feedback Reception & Adaptability</div>
+                        <div class="weight-badge">5 pts</div>
+                    </div>
+                    <p>Takes direction well and implements improvements</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="feedback" value="5" onchange="updateScore()">
+                            <span><strong>5pts:</strong> Excellent with feedback</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="feedback" value="3" onchange="updateScore()">
+                            <span><strong>3pts:</strong> Good at receiving feedback</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="feedback" value="1" onchange="updateScore()">
+                            <span><strong>1pt:</strong> Somewhat receptive</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="feedback" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Resistant to feedback</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Commitment Level -->
+                <div class="criterion important">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Full-Time Commitment</div>
+                        <div class="weight-badge">5 pts</div>
+                    </div>
+                    <p>Dedicated focus, not juggling multiple roles</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="commitment" value="5" onchange="updateScore()">
+                            <span><strong>5pts:</strong> Fully committed to this role</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="commitment" value="2" onchange="updateScore()">
+                            <span><strong>2pts:</strong> Mostly committed</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="commitment" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Multiple roles/testing waters</span>
+                        </label>
                     </div>
                 </div>
             </div>
             
             <!-- Bonus Points (15 points total) -->
-            <div class=\"scoring-section\">
-                <h2 class=\"section-title\">⭐ Bonus Points (15 points)</h2>
+            <div class="scoring-section">
+                <h2 class="section-title">⭐ Bonus Points (15 points)</h2>
                 
-                <div class=\"criteria-grid\">
-                    <!-- Health/Wellness Experience -->
-                    <div class=\"criterion bonus\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Health/Wellness Industry Experience</div>
-                            <div class=\"weight-badge\">8 pts</div>
-                        </div>
-                        <p>Previous experience in health, wellness, or fitness coaching</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"healthExperience\" value=\"8\" onchange=\"updateScore()\">
-                                <span><strong>8pts:</strong> Extensive health/wellness experience</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"healthExperience\" value=\"4\" onchange=\"updateScore()\">
-                                <span><strong>4pts:</strong> Some relevant experience</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"healthExperience\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> No relevant experience</span>
-                            </label>
-                        </div>
+                <!-- Health/Wellness Experience -->
+                <div class="criterion bonus">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Health/Wellness Industry Experience</div>
+                        <div class="weight-badge">8 pts</div>
                     </div>
-                    
-                    <!-- Video Quality -->
-                    <div class=\"criterion bonus\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Video Introduction Quality</div>
-                            <div class=\"weight-badge\">4 pts</div>
-                        </div>
-                        <p>Professional presentation and clear communication</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"videoQuality\" value=\"4\" onchange=\"updateScore()\">
-                                <span><strong>4pts:</strong> Exceptional video quality</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"videoQuality\" value=\"2\" onchange=\"updateScore()\">
-                                <span><strong>2pts:</strong> Good video presentation</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"videoQuality\" value=\"1\" onchange=\"updateScore()\">
-                                <span><strong>1pt:</strong> Adequate video</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"videoQuality\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Poor/missing video</span>
-                            </label>
-                        </div>
+                    <p>Previous experience in health, wellness, or fitness coaching</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="healthExperience" value="8" onchange="updateScore()">
+                            <span><strong>8pts:</strong> Extensive health/wellness experience</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="healthExperience" value="4" onchange="updateScore()">
+                            <span><strong>4pts:</strong> Some relevant experience</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="healthExperience" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> No relevant experience</span>
+                        </label>
                     </div>
-                    
-                    <!-- Overall Enthusiasm -->
-                    <div class=\"criterion bonus\">
-                        <div class=\"criterion-header\">
-                            <div class=\"criterion-title\">Enthusiasm & Cultural Fit</div>
-                            <div class=\"weight-badge\">3 pts</div>
-                        </div>
-                        <p>Genuine excitement about the role and company mission</p>
-                        <div class=\"scoring-options\">
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"enthusiasm\" value=\"3\" onchange=\"updateScore()\">
-                                <span><strong>3pts:</strong> High enthusiasm</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"enthusiasm\" value=\"1\" onchange=\"updateScore()\">
-                                <span><strong>1pt:</strong> Some enthusiasm</span>
-                            </label>
-                            <label class=\"score-option\">
-                                <input type=\"radio\" name=\"enthusiasm\" value=\"0\" onchange=\"updateScore()\">
-                                <span><strong>0pts:</strong> Low enthusiasm</span>
-                            </label>
-                        </div>
+                </div>
+                
+                <!-- Video Quality -->
+                <div class="criterion bonus">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Video Introduction Quality</div>
+                        <div class="weight-badge">4 pts</div>
+                    </div>
+                    <p>Professional presentation and clear communication</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="videoQuality" value="4" onchange="updateScore()">
+                            <span><strong>4pts:</strong> Exceptional video quality</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="videoQuality" value="2" onchange="updateScore()">
+                            <span><strong>2pts:</strong> Good video presentation</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="videoQuality" value="1" onchange="updateScore()">
+                            <span><strong>1pt:</strong> Adequate video</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="videoQuality" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Poor/missing video</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Overall Enthusiasm -->
+                <div class="criterion bonus">
+                    <div class="criterion-header">
+                        <div class="criterion-title">Enthusiasm & Cultural Fit</div>
+                        <div class="weight-badge">3 pts</div>
+                    </div>
+                    <p>Genuine excitement about the role and company mission</p>
+                    <div class="scoring-options">
+                        <label class="score-option">
+                            <input type="radio" name="enthusiasm" value="3" onchange="updateScore()">
+                            <span><strong>3pts:</strong> High enthusiasm</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="enthusiasm" value="1" onchange="updateScore()">
+                            <span><strong>1pt:</strong> Some enthusiasm</span>
+                        </label>
+                        <label class="score-option">
+                            <input type="radio" name="enthusiasm" value="0" onchange="updateScore()">
+                            <span><strong>0pts:</strong> Low enthusiasm</span>
+                        </label>
                     </div>
                 </div>
             </div>
             
             <!-- Notes Section -->
-            <div class=\"notes-section\">
-                <h2 class=\"section-title\">📝 Additional Notes</h2>
-                <textarea id=\"notes\" class=\"notes-textarea\" placeholder=\"Add any additional observations, concerns, or standout qualities about this candidate...\"></textarea>
+            <div class="notes-section">
+                <h2 class="section-title">📝 Additional Notes</h2>
+                <textarea id="notes" class="notes-textarea" placeholder="Add any additional observations, concerns, or standout qualities about this candidate..."></textarea>
                 
-                <button class=\"export-btn\" onclick=\"exportEvaluation()\">Export Evaluation</button>
+                <button class="export-btn" onclick="exportEvaluation()">Export Evaluation</button>
             </div>
         </div>
     </div>
@@ -658,20 +721,20 @@
     <script>
         function updateScore() {
             // Get all selected values
-            const availability = parseInt(document.querySelector('input[name=\"availability\"]:checked')?.value || 0);
-            const dmExperience = parseInt(document.querySelector('input[name=\"dmExperience\"]:checked')?.value || 0);
-            const crmSkills = parseInt(document.querySelector('input[name=\"crmSkills\"]:checked')?.value || 0);
-            const aiTools = parseInt(document.querySelector('input[name=\"aiTools\"]:checked')?.value || 0);
-            const training = parseInt(document.querySelector('input[name=\"training\"]:checked')?.value || 0);
+            const availability = parseInt(document.querySelector('input[name="availability"]:checked')?.value || 0);
+            const dmExperience = parseInt(document.querySelector('input[name="dmExperience"]:checked')?.value || 0);
+            const crmSkills = parseInt(document.querySelector('input[name="crmSkills"]:checked')?.value || 0);
+            const aiTools = parseInt(document.querySelector('input[name="aiTools"]:checked')?.value || 0);
+            const training = parseInt(document.querySelector('input[name="training"]:checked')?.value || 0);
             
-            const growthMindset = parseInt(document.querySelector('input[name=\"growthMindset\"]:checked')?.value || 0);
-            const accountability = parseInt(document.querySelector('input[name=\"accountability\"]:checked')?.value || 0);
-            const feedback = parseInt(document.querySelector('input[name=\"feedback\"]:checked')?.value || 0);
-            const commitment = parseInt(document.querySelector('input[name=\"commitment\"]:checked')?.value || 0);
+            const growthMindset = parseInt(document.querySelector('input[name="growthMindset"]:checked')?.value || 0);
+            const accountability = parseInt(document.querySelector('input[name="accountability"]:checked')?.value || 0);
+            const feedback = parseInt(document.querySelector('input[name="feedback"]:checked')?.value || 0);
+            const commitment = parseInt(document.querySelector('input[name="commitment"]:checked')?.value || 0);
             
-            const healthExperience = parseInt(document.querySelector('input[name=\"healthExperience\"]:checked')?.value || 0);
-            const videoQuality = parseInt(document.querySelector('input[name=\"videoQuality\"]:checked')?.value || 0);
-            const enthusiasm = parseInt(document.querySelector('input[name=\"enthusiasm\"]:checked')?.value || 0);
+            const healthExperience = parseInt(document.querySelector('input[name="healthExperience"]:checked')?.value || 0);
+            const videoQuality = parseInt(document.querySelector('input[name="videoQuality"]:checked')?.value || 0);
+            const enthusiasm = parseInt(document.querySelector('input[name="enthusiasm"]:checked')?.value || 0);
             
             // Calculate totals
             const criticalTotal = availability + dmExperience + crmSkills + aiTools + training;
@@ -703,7 +766,7 @@
             
             // Highlight selected options
             document.querySelectorAll('.score-option').forEach(option => {
-                const radio = option.querySelector('input[type=\"radio\"]');
+                const radio = option.querySelector('input[type="radio"]');
                 if (radio.checked) {
                     option.classList.add('selected');
                 } else {
@@ -738,18 +801,18 @@ Bonus Points: ${document.getElementById('bonusScore').textContent}/15
 RECOMMENDATION: ${recommendation}
 
 DETAILED SCORING:
-- EST Availability: ${document.querySelector('input[name=\"availability\"]:checked')?.value || 0}/15
-- DM Experience: ${document.querySelector('input[name=\"dmExperience\"]:checked')?.value || 0}/15  
-- CRM Skills: ${document.querySelector('input[name=\"crmSkills\"]:checked')?.value || 0}/10
-- AI Tools: ${document.querySelector('input[name=\"aiTools\"]:checked')?.value || 0}/10
-- Training: ${document.querySelector('input[name=\"training\"]:checked')?.value || 0}/10
-- Growth Mindset: ${document.querySelector('input[name=\"growthMindset\"]:checked')?.value || 0}/8
-- Accountability: ${document.querySelector('input[name=\"accountability\"]:checked')?.value || 0}/7
-- Feedback: ${document.querySelector('input[name=\"feedback\"]:checked')?.value || 0}/5
-- Commitment: ${document.querySelector('input[name=\"commitment\"]:checked')?.value || 0}/5
-- Health Experience: ${document.querySelector('input[name=\"healthExperience\"]:checked')?.value || 0}/8
-- Video Quality: ${document.querySelector('input[name=\"videoQuality\"]:checked')?.value || 0}/4
-- Enthusiasm: ${document.querySelector('input[name=\"enthusiasm\"]:checked')?.value || 0}/3
+- EST Availability: ${document.querySelector('input[name="availability"]:checked')?.value || 0}/15
+- DM Experience: ${document.querySelector('input[name="dmExperience"]:checked')?.value || 0}/15  
+- CRM Skills: ${document.querySelector('input[name="crmSkills"]:checked')?.value || 0}/10
+- AI Tools: ${document.querySelector('input[name="aiTools"]:checked')?.value || 0}/10
+- Training: ${document.querySelector('input[name="training"]:checked')?.value || 0}/10
+- Growth Mindset: ${document.querySelector('input[name="growthMindset"]:checked')?.value || 0}/8
+- Accountability: ${document.querySelector('input[name="accountability"]:checked')?.value || 0}/7
+- Feedback: ${document.querySelector('input[name="feedback"]:checked')?.value || 0}/5
+- Commitment: ${document.querySelector('input[name="commitment"]:checked')?.value || 0}/5
+- Health Experience: ${document.querySelector('input[name="healthExperience"]:checked')?.value || 0}/8
+- Video Quality: ${document.querySelector('input[name="videoQuality"]:checked')?.value || 0}/4
+- Enthusiasm: ${document.querySelector('input[name="enthusiasm"]:checked')?.value || 0}/3
 
 ADDITIONAL NOTES:
 ${notes}
@@ -760,7 +823,7 @@ ${notes}
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${candidateName.replace(/\\s+/g, '_')}_DM_Setter_Evaluation.txt`;
+            a.download = `${candidateName.replace(/\s+/g, '_')}_DM_Setter_Evaluation.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -771,5 +834,4 @@ ${notes}
         updateScore();
     </script>
 </body>
-</html>`
-}
+</html>
